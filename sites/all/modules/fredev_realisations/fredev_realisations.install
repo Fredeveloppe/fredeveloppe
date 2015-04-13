@@ -1,0 +1,138 @@
+<?php
+
+// Création de la base de données
+function fredev_realisations_schema()
+{
+	$schema['realisations_categories'] = array(
+		'description' => t("Gère vos différentes catégories de réalisation"),
+		'fields' => array(
+			'recaid' => array(
+				'description' => "L'identifiant de la catégorie de projet",
+				'type' => 'serial',
+				'unsigned' => true,
+				'not null' => true
+			 ),
+			'nom_recaid' => array(
+				'description' => "Nom de la catégorie de réalisation",
+				'type' => 'varchar',
+				'length' => 255,
+				'not null' => true
+			),
+			'description_recaid' => array(
+				'type' => "text",
+			    'title' => t("Brève decription présentant la catégorie"),
+			    'description' => t("La description de la catégorie est un résumé des prérequis pour qu'un projet soit déclaré comme partie intégrante de cette catégorie"),
+			    'not null' => true
+			),
+			'color_recaid' => array(
+				'description' => "Couleur utilisée pour représenter cette catégorie de projet",
+				'type' => 'varchar',
+				'length' => 255,
+				'not null' => true
+			),
+			'fid_icone_recaid' => array(
+				'description' => "Détermine l'icone qui représentera la catégorie",
+				'type' => 'int',
+				'length' => 10,
+				'unsigned' => true,
+				"not null" => false
+			),
+			'fid_miniature_recaid' => array(
+				'description' => "Détermine la miniature qui représentera la catégorie",
+				'type' => 'int',
+				'length' => 10,
+				'unsigned' => true,
+				"not null" => false
+			),
+			'ordre_recaid' => array(
+				'description' => "Détermine l'ordre d'affichage dans le site",
+				'type' => 'int',
+				'unsigned' => true,
+				'default' => 0,
+				"not null" => true
+			)
+		),
+		'primary key' => array('recaid')
+	);
+
+	$schema['realisations_definitions'] = array(
+		'description' => t("Gère vos différents définition de réalisation"),
+		'fields' => array(
+			'redefid' => array(
+				'description' => "L'identifiant de la définition de réalisation",
+				'type' => 'serial',
+				'unsigned' => true,
+				'not null' => true
+			 ),
+			'nom_redefid' => array(
+				'description' => "Nom de la réalisation",
+				'type' => 'varchar',
+				'length' => 255,
+				'not null' => true
+			),
+			'fid_miniature_redefid' => array(
+				'description' => "Détermine la miniature qui représentera la réalisation",
+				'type' => 'int',
+				'length' => 10,
+				'unsigned' => true,
+				"not null" => false
+			),
+			'date_debut_redefid' => array(
+				'description' => "Date de début de la réalisation",
+				'type' => 'datetime',
+				'mysql_type' => 'datetime',
+				"not null" => true
+			),
+			'date_fin_redefid' => array(
+				'description' => "Date de fin de la réalisation",
+				'type' => 'datetime',
+				'mysql_type' => 'datetime',
+				"not null" => false
+			),
+			'recaid' => array(
+				'description' => "Catégorie de projet pour lequel ce projet est associé",
+				'type' => 'int',
+				'unsigned' => true,
+				"not null" => false
+			),
+			'activite_redefid' => array(
+				'description' => "Détermine si la réalisation doit figurer dans le site",
+				'type' => 'int',
+				'unsigned' => true,
+				'length' => 1,
+				'default' => 0,
+				"not null" => true
+			)
+		),
+		'primary key' => array('redefid')
+	);
+
+	return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function fredev_realisations_install() {
+  // Make real foreign keys.
+  db_query('
+    ALTER TABLE {realisations_definitions}
+    ADD CONSTRAINT {realisations_definitions_recaid}
+    FOREIGN KEY (recaid) REFERENCES {realisations_categories} (recaid)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
+  ');
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function fredev_realisations_uninstall() {
+  // Make real foreign keys.
+  db_query('
+    ALTER TABLE {realisations_definitions}
+    DROP FOREIGN KEY {realisations_definitions_recaid}
+  ');
+}
+
+?>

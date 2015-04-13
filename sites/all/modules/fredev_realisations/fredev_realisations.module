@@ -1,0 +1,151 @@
+<?php
+
+// Système d'aide
+function fredev_realisations_help($path, $args) {
+  if ($path == 'admin/help#fredev_realisations') {
+    return t("Allez dans la gestion des blocs sous l'onglet structure pour modifier la position du module de réalisations");
+  }
+}
+
+// Affichage du bloc dans la liste des blocks
+function fredev_realisations_block_info()
+{
+	$blocks = array();
+
+	$blocks['realisations_overview'] = array(
+	    'info' => t('Un aperçu des réalisations'),
+	    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  $blocks['realisations_search'] = array(
+      'info' => t('Rechercher parmis les réalisations'),
+      'cache' => DRUPAL_NO_CACHE,
+  );
+
+	return $blocks;
+}
+
+// Détermination du contenu du block pour l'affichage final
+function fredev_realisations_block_view($name)
+{
+	$mod_path = drupal_get_path('module', 'fredev_realisations');
+
+	if ($name == 'realisations_overview') {	
+
+      drupal_add_css($mod_path. '/css/realisations_categories.css', array('group' => CSS_DEFAULT, 'type' => 'file')); 
+      drupal_add_js($mod_path. '/js/realisations_cat.js');  
+
+      // Évalue le PHP/HTML et stock son résultat dans une variable
+      ob_start();
+      include($mod_path."/template_categories.php");
+      $content = ob_get_clean();
+
+	    $block = array(
+	      'subject' => t('Un aperçu des réalisations'),
+	      'content' => $content
+	    );
+	 
+	    return $block;
+	}
+  else if ($name == 'realisations_search') { 
+
+      drupal_add_css($mod_path. '/css/realisations_search.css', array('group' => CSS_DEFAULT, 'type' => 'file')); 
+      drupal_add_js($mod_path. '/js/jquery-animate-css-rotate-scale.js', array('type' => 'file', 'scope' => 'footer')); 
+      drupal_add_js($mod_path. '/js/quicksand.1.4.js', array('type' => 'file', 'scope' => 'footer')); 
+      drupal_add_js($mod_path. '/js/realisations_search.js');   
+      
+      // Évalue le PHP/HTML et stock son résultat dans une variable
+      ob_start();
+      include($mod_path."/template_search.php");
+      $content = ob_get_clean();
+
+      $block = array(
+        'subject' => t('Rechercher parmis les réalisations'),
+        'content' => $content
+      );
+   
+      return $block;
+  }
+
+}
+
+// Ajout de la configuration dans un panneau
+function fredev_realisations_menu() {
+  $items = array();
+
+  $items['admin/config/fredeveloppe'] = array(
+    'title' => 'Fredeveloppe Website',
+    'description' => 'Configuration des modules spécifiques à Fredeveloppe',
+    'position' => 'right',
+    'weight' => -100,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+
+  $items['admin/config/fredeveloppe/realisations'] = array(
+    'title' => 'Les réalisations',
+    'description' => "Configurer les diverses réalisations qui figurent sur votre site",
+    'page callback' => 'realisations_root',
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'inc/root.inc',
+  );
+
+  $items['admin/config/fredeveloppe/realisations/categories'] = array(
+    'title' => 'Gestion des catégories de réalisation',
+    'description' => "Configurer l'affichage des catégories pour vos réalisations",
+    'page callback' => 'realisations_categories_admin',
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'inc/categories.admin.inc',
+  );
+
+      $items['admin/config/fredeveloppe/realisations/categories/formulaire'] = array(
+        'title' => 'Nouvelle catégorie',
+        'description' => "Formulaire d'ajout d'une nouvelle catégorie",
+        'page callback' => 'realisations_categories_formulaire',
+        'access arguments' => array('administer users'),
+        'type' => MENU_NORMAL_ITEM,
+        'file' => 'inc/categories.admin.inc',
+      );
+
+      $items['admin/config/fredeveloppe/realisations/categories/suppression'] = array(
+        'title' => "Suppression d'une catégorie",
+        'description' => "Suppression d'une catégorie",
+        'page callback' => 'realisations_categories_suppression',
+        'access arguments' => array('administer users'),
+        'type' => MENU_NORMAL_ITEM,
+        'file' => 'inc/categories.admin.inc',
+      );
+
+  $items['admin/config/fredeveloppe/realisations/assignation'] = array(
+    'title' => 'Assignation de catégorie pour les réalisations',
+    'description' => "Configurer la catégorie qui découle de la réalisation",
+    'page callback' => 'realisations_assignation_admin',
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'inc/assignation.admin.inc',
+  );
+
+      $items['admin/config/fredeveloppe/realisations/assignation/formulaire'] = array(
+        'title' => 'Nouvelle réalisation',
+        'description' => "Formulaire d'assignation d'une nouvelle réalisation",
+        'page callback' => 'realisations_assignation_formulaire',
+        'access arguments' => array('administer users'),
+        'type' => MENU_NORMAL_ITEM,
+        'file' => 'inc/assignation.admin.inc',
+      );
+
+      $items['admin/config/fredeveloppe/realisations/assignation/suppression'] = array(
+        'title' => "Suppression d'une réalisation",
+        'description' => "Suppression d'une réalisation qui ne devrait plus figurer sur le site",
+        'page callback' => 'realisations_assignation_suppression',
+        'access arguments' => array('administer users'),
+        'type' => MENU_NORMAL_ITEM,
+        'file' => 'inc/assignation.admin.inc',
+      );
+
+  return $items;
+}

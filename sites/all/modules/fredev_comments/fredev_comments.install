@@ -1,0 +1,41 @@
+<?php
+
+// Création de la base de données
+function fredev_comments_schema()
+{
+	$schema['commentaires'] = array(
+		'description' => t("Gère vos différents commentaires de votre site"),
+		'fields' => array(
+			'id' => array(
+				'description' => "L'identifiant du commentaire",
+				'type' => 'serial',
+				'unsigned' => true,
+				'not null' => true
+			 ),
+			'commentaire' => array(
+				'type' => "text",
+			    'title' => t("Contenu du commentaire"),
+			    'description' => t("Le contenu du comentaire"),
+			    'not null' => true
+			),
+			'date_publication' => array(
+				'description' => "Date de publication du commentaire",
+				'type' => 'datetime',
+				'mysql_type' => 'datetime',
+				"not null" => true
+			),
+			'uid' => array(
+				'description' => "Identifiant de l'utilisateur à qui appartient le commentaire",
+				'type' => 'int',
+				'unsigned' => true,
+				'default' => 0,
+				"not null" => false
+			)
+		),
+		'primary key' => array('id')
+	);
+
+	return $schema;
+}
+
+?>

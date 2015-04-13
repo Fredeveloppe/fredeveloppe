@@ -1,0 +1,46 @@
+<?php
+
+// Création de la base de données
+function fredev_projets_schema()
+{
+	$schema['projets'] = array(
+		'description' => t("Gère vos différents projets actuels"),
+		'fields' => array(
+			'id' => array(
+				'description' => "L'identifiant du projet actuel",
+				'type' => 'serial',
+				'unsigned' => true,
+				'not null' => true
+			 ),
+			'titre' => array(
+				'description' => "Titre du projet actuel",
+				'type' => 'varchar',
+				'length' => 255,
+				'not null' => true
+			),
+			'texte' => array(
+				'type' => "text",
+			    'title' => t("Contenu du projet actuel"),
+			    'description' => t("Le contenu du texte est un résumé du devis technique du projet"),
+			    'not null' => true
+			),
+			'date_debut' => array(
+				'description' => "Date de début anticipé du projet",
+				'type' => 'datetime',
+				'mysql_type' => 'datetime',
+				"not null" => true
+			),
+			'date_fin' => array(
+				'description' => "Date de fin du projet",
+				'type' => 'datetime',
+				'mysql_type' => 'datetime',
+				"not null" => false
+			)
+		),
+		'primary key' => array('id')
+	);
+
+	return $schema;
+}
+
+?>

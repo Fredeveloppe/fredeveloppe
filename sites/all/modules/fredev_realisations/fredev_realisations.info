@@ -1,0 +1,12 @@
+name = Réalisations
+description = Configurer l'affichage des divers projets des Fredeveloppe
+package = Fredeveloppe Website
+core = 7.x
+configure = admin/config/fredeveloppe/realisations
+dependencies[] = fredev_dependencies
+
+; Information added by drupal.org packaging script on 2013-03-02
+version = "7.x-3.4"
+core = "7.x"
+project = "fredev_realisations"
+datestamp = "1419319956"

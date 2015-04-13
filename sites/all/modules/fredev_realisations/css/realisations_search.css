@@ -1,0 +1,331 @@
+#realisations-wrapper {
+    width: 90%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+#realisations-wrapper #wrapping {overflow: hidden;}
+
+#realisations-cats {
+	position: relative;
+	z-index: 3;
+    width: 90%;
+    text-align: center;
+    margin: 0 auto
+}
+
+#realisations-cats ul {
+    margin: 0 auto 50px auto;
+    overflow: auto;
+    display: inline-block
+}
+
+#realisations-cats li {
+    padding: 10px 20px;
+    float: left;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+#realisations-cats li:hover {color: #00b5ca;}
+
+#realisations-cats .active {
+	background-color: #333;
+	color: #FFF;
+	cursor: default;
+}
+
+#realisations-cats .active:hover {color: #FFF;}
+
+#realisations-cats select {
+	height: 50px;
+	line-height: 50px;
+	background: #333;
+	color: #FFF;
+	padding-left: 15px;
+	display: none;
+}
+
+#realisations-wrapper .box {
+    position: relative;
+    width: 20%;
+    float: left
+}
+
+#realisations-wrapper .box .hover {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    opacity: 0;
+    filter: alpha(opacity=0);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0%;
+    left: 0%;
+    z-index: 1;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0);
+    border: 6px solid rgba(255, 255, 0, 0);
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s
+}
+
+#realisations-wrapper .box:hover .hover {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity: 1;
+    filter: alpha(opacity=100);
+    border: 6px solid rgba(255, 255, 0, 0.75);
+    background-color: rgba(255, 255, 255, 0.75)
+}
+
+#realisations-wrapper .box .hover h2 {
+    position: absolute;
+    bottom: 40%;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    padding: 0 15px;
+    -moz-animation: delayAnimOut 0.5s;
+    -webkit-animation: delayAnimOut 0.5s;
+    animation: delayAnimOut 0.5s;
+}
+
+#realisations-wrapper .box .hover span {
+    position: absolute;
+    top: 60%;
+    width: 100%;
+    left: 0;
+    padding: 0 15px;
+    z-index: 2;
+    -moz-animation: delayAnimOutII 0.5s;
+    -webkit-animation: delayAnimOutII 0.5s;
+    animation: delayAnimOutII 0.5s;
+}
+
+#realisations-wrapper .box:hover .hover h2 {
+	-moz-animation: delayAnim 0.5s;
+    -webkit-animation: delayAnim 0.5s;
+    animation: delayAnim 0.5s;
+}
+
+#realisations-wrapper .box:hover .hover span {
+	-moz-animation: delayAnimII 0.7s;
+    -webkit-animation: delayAnimII 0.7s;
+    animation: delayAnimII 0.7s;
+}
+
+
+/**** Animation 1 ****/
+@-o-keyframes delayAnimOut {
+	from {
+		opacity: 1;
+		bottom: 40%;
+	}
+	to {
+		opacity: 0;
+		bottom: 80%;
+	}
+}
+
+@-webkit-keyframes delayAnimOut {
+	from {
+		opacity: 1;
+		bottom: 40%;
+	}
+	to {
+		opacity: 0;
+		bottom: 80%;
+	}
+}
+
+@-moz-keyframes delayAnimOut {
+	from {
+		opacity: 1;
+		bottom: 40%;
+	}
+	to {
+		opacity: 0;
+		bottom: 80%;
+	}
+}
+
+@keyframes delayAnimOut {
+    from {
+		opacity: 1;
+		bottom: 40%;
+	}
+	to {
+		opacity: 0;
+		bottom: 80%;
+	}
+}
+
+@-o-keyframes delayAnim {
+	0% {
+		opacity: 0;
+		bottom: 80%;
+	}
+    25% {
+    	opacity: 0;
+    	bottom: 80%;
+    } 
+    100% {
+    	opacity: 1;
+    	bottom: 40%;
+    }
+}
+
+@-webkit-keyframes delayAnim {
+	0% {
+		opacity: 0;
+		bottom: 80%;
+	}
+    25% {
+    	opacity: 0;
+    	bottom: 80%;
+    } 
+    100% {
+    	opacity: 1;
+    	bottom: 40%;
+    }
+}
+
+@-moz-keyframes delayAnim {
+	0% {
+		opacity: 0;
+		bottom: 80%;
+	}
+    25% {
+    	opacity: 0;
+    	bottom: 80%;
+    } 
+    100% {
+    	opacity: 1;
+    	bottom: 40%;
+    }
+}
+
+@keyframes delayAnim {
+    0% {
+		opacity: 0;
+		bottom: 80%;
+	}
+    25% {
+    	opacity: 0;
+    	bottom: 80%;
+    } 
+    100% {
+    	opacity: 1;
+    	bottom: 40%;
+    }
+}
+
+
+/**** Animation 2 ****/
+@-o-keyframes delayAnimOutII {
+	from {
+    	opacity: 1;
+    	top: 60%;
+    }
+    to {
+    	opacity: 0;
+    	top: 80%;
+    }
+}
+
+@-webkit-keyframes delayAnimOutII {
+	from {
+    	opacity: 1;
+    	top: 60%;
+    }
+    to {
+    	opacity: 0;
+    	top: 80%;
+    }
+}
+
+@-moz-keyframes delayAnimOutII {
+	from {
+    	opacity: 1;
+    	top: 60%;
+    }
+    to {
+    	opacity: 0;
+    	top: 80%;
+    }
+}
+
+@keyframes delayAnimOutII {
+    from {
+    	opacity: 1;
+    	top: 60%;
+    }
+    to {
+    	opacity: 0;
+    	top: 80%;
+    }
+}
+
+
+@-o-keyframes delayAnimII {
+	0% {
+		opacity: 0;
+		top: 80%;
+	} 
+    50% {
+    	opacity: 0;
+    	top: 80%;
+    } 
+    100% {
+    	opacity: 1;
+    	top: 60%;
+    }
+}
+
+@-webkit-keyframes delayAnimII {
+	0% {
+		opacity: 0;
+		top: 80%;
+	} 
+    50% {
+    	opacity: 0;
+    	top: 80%;
+    } 
+    100% {
+    	opacity: 1;
+    	top: 60%;
+    }
+}
+
+@-moz-keyframes delayAnimII {
+	0% {
+		opacity: 0;
+		top: 80%;
+	} 
+    50% {
+    	opacity: 0;
+    	top: 80%;
+    } 
+    100% {
+    	opacity: 1;
+    	top: 60%;
+    }
+}
+
+@keyframes delayAnimII {
+    0% {
+		opacity: 0;
+		top: 80%;
+	} 
+    50% {
+    	opacity: 0;
+    	top: 80%;
+    } 
+    100% {
+    	opacity: 1;
+    	top: 60%;
+    }
+}

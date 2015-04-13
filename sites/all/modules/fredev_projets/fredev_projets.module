@@ -1,0 +1,88 @@
+<?php
+
+// Système d'aide
+function fredev_projets_help($path, $args) {
+  if ($path == 'admin/help#fredev_projets') {
+    return t("Allez dans la gestion des blocs sous l'onglet structure pour modifier la position du module de contact");
+  }
+}
+
+// Affichage du bloc dans la liste des blocks
+function fredev_projets_block_info()
+{
+	$blocks = array();
+
+	$blocks['projets'] = array(
+	    'info' => t('Projets actuels'),
+	    'cache' => DRUPAL_NO_CACHE,
+  	);
+
+	return $blocks;
+}
+
+// Détermination du contenu du block pour l'affichage final
+function fredev_projets_block_view($name)
+{
+	$mod_path = drupal_get_path('module', 'fredev_projets');
+	drupal_add_css($mod_path. '/css/projets.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+	
+	// Évalue le PHP/HTML et stock son résultat dans une variable
+	ob_start();
+	include($mod_path."/template.php");
+	$content = ob_get_clean();
+
+	if ($name == 'projets') {	 
+	    $block = array(
+	      'subject' => t('Projets actuels'),
+	      'content' => $content
+	    );
+	 
+	    return $block;
+	}
+
+}
+
+// Ajout de la configuration dans un panneau
+function fredev_projets_menu() {
+  $items = array();
+
+  $items['admin/config/fredeveloppe'] = array(
+    'title' => 'Fredeveloppe Website',
+    'description' => 'Configuration des modules spécifiques à Fredeveloppe',
+    'position' => 'right',
+    'weight' => -100,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+
+  $items['admin/config/fredeveloppe/projets'] = array(
+    'title' => 'Projets actuels',
+    'description' => "Configurer l'affichage du module listant les projets actuels",
+    'page callback' => 'projets_admin',
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'inc/projets.admin.inc',
+  );
+
+  $items['admin/config/fredeveloppe/projets/formulaire'] = array(
+    'title' => 'Nouveau projet',
+    'description' => "Formulaire d'ajout d'un nouveau projet",
+    'page callback' => 'projets_formulaire',
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'inc/projets.admin.inc',
+  );
+
+  $items['admin/config/fredeveloppe/projets/suppression'] = array(
+    'title' => "Suppression d'un projet actuel",
+    'description' => "Suppression d'un projet actuel qui n'a pu avoir lieu",
+    'page callback' => 'projets_suppression',
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'inc/projets.admin.inc',
+  );
+
+  return $items;
+}

@@ -1,0 +1,22 @@
+name = fredeveloppe
+description = Un thème pour diffuser le site de Fredeveloppe
+version = VERSION
+core = 7.x
+
+stylesheets[all][] = stylesheets/screen.css
+stylesheets[all][] = stylesheets/colors.css
+stylesheets[all][] = stylesheets/style.css
+
+regions[connexion] = Connexion
+regions[menu] = Menu
+regions[content] = Contenu
+regions[footer] = Pied de page
+regions[final_footer] = Pied final
+
+settings[bandeau] = "Merci de votre visite!"
+
+version = "7.x-1.0"
+core = "7.x"
+project = "fredeveloppe"
+datestamp = "1377977922"
+

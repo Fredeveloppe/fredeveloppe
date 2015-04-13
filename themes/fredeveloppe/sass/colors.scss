@@ -1,0 +1,99 @@
+// Global Foundation Settings
+@import "compass/css3";
+@import "settings";
+
+// Comment out this import if you don't want to use normalize
+@import "normalize";
+
+// Comment out this import if you are customizing you imports below
+@import "foundation";
+
+$color1: #000; // noir
+$color2: #444; // gris foncé
+$color3: #FFF; // blanc
+$color4: #F00;  // rouge
+$color5: #FF0; // jaune
+$color6: #0965b2; // Bleu
+$color7: #272727; // Quasi noir
+
+.tag:before {background-color: lighten($color2, 25%);}
+.tag h3 {
+    background-color: lighten($color2, 25%);
+    color: $color3;
+}
+
+.sheet .tag:before {background-color: $color2;}
+.sheet .tag h3 {background-color: $color2;}
+
+#main-content {background: url(../images/bg-quadrille.png) repeat center center;}
+
+#entete {
+    background-color: lighten($color1, 20%);
+    @include background(linear-gradient(top, $color1, $color2));
+    color: $color3;
+}
+
+#entete a {color: $color3;}
+
+#entete label, #entete label .form-required2, #connexion .item-list a {color: darken($color3, 30%);}
+
+#connexion .item-list a {@include single-transition(color, 0.5s, ease-in-out);}
+#connexion .item-list a:hover {color: $color5;}
+
+#connexion .form-item input {
+    background-color: #424242;
+    border: 1px outset #626262;
+    color: $color3;
+}
+
+.region-menu .menu a:hover {border-bottom: 2px solid $color4;}
+
+#fil-ariane {color: $color1;}
+#fil-ariane h3 {color: $color3;}
+#fil-ariane a, #main-content a:hover {color: $color6;}
+#fil-ariane a:hover {color: $color4;}
+
+.effacer {
+	background: #7a0000;
+	@include background(linear-gradient(top, #d60000, #7a0000));
+	color: #FFF;
+}
+
+.effacer:hover {
+	border-top-color: #e80909;
+    background: #e80909;
+}
+
+.effacer:active {
+	border-top: 1px solid #7a0000;
+	@include background(linear-gradient(top, #7a0000, #d60000));
+}
+
+#pied {
+    background: $color7 url(../images/border.png) top left repeat-x;
+    color: $color3;
+}
+
+.footer-col-inner h3 {color: $color3;}
+
+.ppf {
+    background: #d7d7d7 url(../images/footer-final.png) repeat-x;
+    color: $color1;
+}
+
+#pied-page-final .menu a {
+    text-transform: lowercase;
+    font-variant: small-caps;
+    color: $color1;
+}
+
+#pied-page-final .menu .active, #pied-page-final .menu a:hover {border-bottom: 2px solid $color4;}
+
+/*** Spécial rule pour les écrans small **/
+
+@media #{$small} {
+
+    .region-menu .menu li {
+        @include background(linear-gradient(top, lighten($color1, 20%) 0%, $color2 10%, $color2 90%, lighten($color1, 20%) 100%));
+    }
+}

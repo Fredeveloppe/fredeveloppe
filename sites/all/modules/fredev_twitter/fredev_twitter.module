@@ -1,0 +1,200 @@
+<?php
+
+
+// Système d'aide
+function fredev_twitter_help($path, $args) {
+  if ($path == 'admin/help#fredev_twitter') {
+    return t("Allez dans la gestion des blocs sous l'onglet structure pour modifier la position du module de flux twitter");
+  }
+}
+
+// Affichage du bloc dans la liste des blocks
+function fredev_twitter_block_info()
+{
+	$blocks = array();
+
+	$blocks['fredev_twitter'] = array(
+	    'info' => t('Flux twitter'),
+	    'cache' => DRUPAL_NO_CACHE,
+  	);
+
+	return $blocks;
+}
+
+// Détermination du contenu du block pour l'affichage final
+function fredev_twitter_block_view($name)
+{
+	$mod_path = drupal_get_path('module', 'fredev_twitter');
+	drupal_add_css($mod_path. '/css/twitter.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+	
+	// Évalue le PHP/HTML et stock son résultat dans une variable
+	ob_start();
+	include($mod_path."/template.php");
+	$content = ob_get_clean();
+
+	if ($name == 'fredev_twitter') {	 
+	    $block = array(
+	      'subject' => t('Flux twitter'),
+	      'content' => $content
+	    );
+	 
+	    return $block;
+	}
+
+}
+
+// Ajout de la configuration dans un panneau
+function fredev_twitter_menu() {
+  $items = array();
+
+  $items['admin/config/fredeveloppe'] = array(
+    'title' => 'Fredeveloppe Website',
+    'description' => 'Configuration des modules spécifiques à Fredeveloppe',
+    'position' => 'right',
+    'weight' => -100,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+
+  $items['admin/config/fredeveloppe/twitter'] = array(
+    'title' => 'Flux twitter',
+    'description' => "Émettre un tweet depuis votre site web",
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('fredev_twitter_form'),
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['admin/config/fredeveloppe/medias'] = array(
+    'title' => 'Les autres médias sociaux',
+    'description' => "Ajouter d'autres médias sociaux sur lequel vous êtes",
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('fredev_medias_form'),
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+// Ajoute une tâche supplémentaire au CRON JOB
+function fredev_twitter_cron()
+{
+  require(drupal_get_path('module', 'fredev_twitter')."/twitteroauth/twitteroauth.php");
+
+  // Twitter Connection Info
+  $twitter_access_token = '577655521-LYjai3Z4vz3mpyVTPR5g6mvj2LneqKfhk1kasax7';
+  $twitter_access_token_secret = '2QVa7v9I6EIFA0FtQCSt26bZhe4UihgqhapeEbyjsE';
+  $twitter_consumer_key = '74GLlK3wkkrWbWcv3R2iA';
+  $twitter_consumer_secret = 'dYdOqQ9Kemyuzw2GHCZU9yrh24wbk6AhcaLQqQJT49Q';
+
+  $connection = new TwitterOAuth($twitter_consumer_key, $twitter_consumer_secret, $twitter_access_token, $twitter_access_token_secret);
+
+  $tweet_content = $connection->get('statuses/home_timeline', array('count' => 1));
+
+  file_put_contents(drupal_get_path('module', 'fredev_twitter')."/tweet.txt", json_encode($tweet_content));
+}
+
+// Formulaire pour la mise à jour de ce module
+function fredev_twitter_form($form, &$form_state)
+{
+
+  drupal_add_js(drupal_get_path('module', 'fredev_dependencies'). '/js/textLimit.js');
+
+  $max_length = 140;
+  $form['tweet'] = array(
+    '#type' => 'textarea',
+      '#title' => t('Contenu de votre tweet. (%limit)', array('%limit' => $max_length)),
+      '#default_value' => '',
+      '#description' => t("Le contenu de votre tweet. Il est limité à %limit caractères", array('%limit' => $max_length)),
+      '#attributes' => array(
+        'onkeyup' => "textareaMaxLength(this, event, $max_length);",
+        'onload' => "textareaMaxLength(this, event, $max_length);",
+        'class' => array("textLimit")
+      )
+  );
+
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save settings'),
+  );
+
+  return $form;
+}
+
+// Envoit du formulaire et validation
+function fredev_twitter_form_submit($form, &$form_state)
+{
+  $tweet = filter_var($form_state['values']['tweet'], FILTER_SANITIZE_STRING);
+
+  if(!preg_match('/^\s*$/',$tweet) && strlen($tweet) < 141)
+  {
+    require(drupal_get_path('module', 'fredev_twitter')."/twitteroauth/twitteroauth.php");
+
+    // Twitter Connection Info
+    $twitter_access_token = '577655521-LYjai3Z4vz3mpyVTPR5g6mvj2LneqKfhk1kasax7';
+    $twitter_access_token_secret = '2QVa7v9I6EIFA0FtQCSt26bZhe4UihgqhapeEbyjsE';
+    $twitter_consumer_key = '74GLlK3wkkrWbWcv3R2iA';
+    $twitter_consumer_secret = 'dYdOqQ9Kemyuzw2GHCZU9yrh24wbk6AhcaLQqQJT49Q';
+
+    $connection = new TwitterOAuth($twitter_consumer_key, $twitter_consumer_secret, $twitter_access_token, $twitter_access_token_secret);
+    
+    $content = $connection->post('statuses/update', array('status' => $tweet));
+
+    drupal_set_message(t("Le tweet à bel et bien été publié sur votre mur"));
+  }
+  else drupal_set_message(t("Vous ne pouvez publier ce message sur votre mur"), 'error');
+}
+
+// Formulaire pour la mise à jour de ce module
+function fredev_medias_form($form, &$form_state)
+{
+  $form['medias_facebook'] = array(
+    '#type' => "textfield",
+      '#title' => t("La page facebook profesionnelle qui vous représente"),
+      '#default_value' => variable_get('medias_facebook'),
+      '#description' => t("La page facebook profesionnelle qui vous représente")
+  );
+
+  $form['medias_google'] = array(
+    '#type' => "textfield",
+      '#title' => t("La page google+ qui vous représente"),
+      '#default_value' => variable_get('medias_google'),
+      '#description' => t("La page google+ qui vous représente")
+  );
+
+  $form['medias_twitter'] = array(
+    '#type' => "textfield",
+      '#title' => t("Le nom de votre compte twitter"),
+      '#default_value' => variable_get('medias_twitter'),
+      '#description' => t("Le nom de votre compte twitter utilisé pour vous représenté (exemple: @nom_compte)")
+  );
+
+  $form['medias_skype'] = array(
+    '#type' => "textfield",
+      '#title' => t("Le nom de votre compte skype"),
+      '#default_value' => variable_get('medias_skype'),
+      '#description' => t("Le nom de votre compte skype sans le @adresse.com")
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save settings'),
+  );
+
+  return $form;
+}
+
+// Envoit du formulaire et validation
+function fredev_medias_form_submit($form, &$form_state)
+{
+  variable_set("medias_facebook", $form_state['values']['medias_facebook']);
+  variable_set("medias_google", $form_state['values']['medias_google']);
+  variable_set("medias_twitter", $form_state['values']['medias_twitter']);
+  variable_set("medias_skype", $form_state['values']['medias_skype']);
+
+  drupal_set_message(t("Les modifications ont bel et bien étés enregistrées"));
+}

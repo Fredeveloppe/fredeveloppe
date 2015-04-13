@@ -1,0 +1,215 @@
+<?php
+
+// Système d'aide
+function fredev_contact_help($path, $args) {
+  if ($path == 'admin/help#fredev_contact') {
+    return t("Allez dans la gestion des blocs sous l'onglet structure pour modifier la position du module de contact");
+  }
+}
+
+// Affichage du bloc dans la liste des blocks
+function fredev_contact_block_info()
+{
+	$blocks = array();
+
+	$blocks['contact'] = array(
+	    'info' => t('Contactez-moi'),
+	    'cache' => DRUPAL_NO_CACHE,
+  	);
+
+	return $blocks;
+}
+
+// Détermination du contenu du block pour l'affichage final
+function fredev_contact_block_view($name)
+{
+	$mod_path = drupal_get_path('module', 'fredev_contact');
+	drupal_add_css($mod_path. '/css/contact.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+	drupal_add_css($mod_path. '/css/bookblock.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+
+	$settings = array(
+		"modPath" => $mod_path
+	);
+
+	drupal_add_js(array("fredev_contact" => $settings), "setting");
+	drupal_add_js($mod_path."/js/modernizr.custom.js", "file");
+	drupal_add_js($mod_path."/js/jquery.bookblock.js", "file");
+	drupal_add_js($mod_path."/js/contact.js", "file");
+	
+	// Évalue le PHP/HTML et stock son résultat dans une variable
+	ob_start();
+	include($mod_path."/template.php");
+	$content = ob_get_clean();
+
+	if ($name == 'contact') {	 
+	    $block = array(
+	      'subject' => t('Contactez-moi'),
+	      'content' => $content
+	    );
+	 
+	    return $block;
+	}
+
+}
+
+// Ajout de la configuration dans un panneau
+function fredev_contact_menu() {
+  $items = array();
+
+  $items['admin/config/fredeveloppe'] = array(
+    'title' => 'Fredeveloppe Website',
+    'description' => 'Configuration des modules spécifiques à Fredeveloppe',
+    'position' => 'right',
+    'weight' => -100,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+
+  $items['admin/config/fredeveloppe/contact'] = array(
+    'title' => 'Contactez-moi',
+    'description' => "Configurer l'affichage du module de contact",
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('fredev_contact_form'),
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+// Formulaire pour la mise à jour de ce module
+function fredev_contact_form($form, &$form_state)
+{
+
+	$form['adresse_fieldset'] = array(
+		'#type' => 'fieldset',
+	    '#title' => t("Zone d'adresse"),
+	    '#description' => t("Configurer votre zone d'adresse")
+	);
+
+		$form['adresse_fieldset'][0]['contact_nom'] = array(
+			'#type' => "textfield",
+		    '#title' => t("Le prénom et le nom de la personne à contacter"),
+		    '#default_value' => variable_get('contact_nom'),
+		    '#description' => t("Le prénom et le nom de la personne à contacter qui sera utilisé dans la zone d'adresse")
+		);
+
+		$form['adresse_fieldset'][0]['contact_adresse'] = array(
+			'#type' => "textfield",
+		    '#title' => t("L'adresse de la personne à contacter"),
+		    '#default_value' => variable_get('contact_adresse'),
+		    '#description' => t("L'adresse de la personne à contacter qui sera utilisé dans la zone d'adresse")
+		);
+
+		$form['adresse_fieldset'][0]['contact_code_postal'] = array(
+			'#type' => "textfield",
+		    '#title' => t("Le code postal de la personne à contacter"),
+		    '#default_value' => variable_get('contact_code_postal'),
+		    '#description' => t("Le code postal de la personne à contacter qui sera utilisé dans la zone d'adresse")
+		);
+
+	$form['courriel_fieldset'] = array(
+		'#type' => 'fieldset',
+	    '#title' => t("Zone de courriel"),
+	    '#description' => t("Configurer votre zone de courriel")
+	);
+
+		$form['courriel_fieldset'][0]['contact_courriel'] = array(
+			'#type' => "textfield",
+		    '#title' => t("Adresse courriel de la personne à contacter"),
+		    '#default_value' => variable_get('contact_courriel'),
+		    '#description' => t("L'adrese courriel de la personne à contacter utilisé dans la zone de courriel")
+		);
+
+	$form['telephone_fieldset'] = array(
+		'#type' => 'fieldset',
+	    '#title' => t("Zone de courriel"),
+	    '#description' => t("Configurer votre zone de téléphone")
+	);
+
+		$form['telephone_fieldset'][0]['contact_maison'] = array(
+			'#type' => "textfield",
+		    '#title' => t("Téléphone à domicile de la personne à contacter"),
+		    '#default_value' => variable_get('contact_maison'),
+		    '#description' => t("Téléphone à domicile de la personne à contacter utilisé dans la zone de téléphone")
+		);
+
+		$form['telephone_fieldset'][0]['contact_travail'] = array(
+			'#type' => "textfield",
+		    '#title' => t("Téléphone au travail de la personne à contacter"),
+		    '#default_value' => variable_get('contact_travail'),
+		    '#description' => t("Téléphone au travail de la personne à contacter utilisé dans la zone de téléphone")
+		);
+
+		$form['telephone_fieldset'][0]['contact_cell'] = array(
+			'#type' => "textfield",
+		    '#title' => t("Téléphone cellulaire de la personne à contacter"),
+		    '#default_value' => variable_get('contact_cell'),
+		    '#description' => t("Téléphone cellulaire de la personne à contacter utilisé dans la zone de téléphone")
+		);
+
+	$form['media_fieldset'] = array(
+		'#type' => 'fieldset',
+	    '#title' => t("Zone de médias sociaux"),
+	    '#description' => t("Configurer votre zone de médias sociaux")
+	);
+
+		$form['media_fieldset'][0]['contact_facebook'] = array(
+			'#type' => "textfield",
+		    '#title' => t("Adresse professionnelle facebook de la personne à contacter"),
+		    '#default_value' => variable_get('contact_facebook'),
+		    '#description' => t("Adresse professionnelle facebook de la personne à contacter utilisé dans la zone de médias sociaux")
+		);
+
+		$form['media_fieldset'][0]['contact_twitter'] = array(
+			'#type' => "textfield",
+		    '#title' => t("Adresse professionnelle twitter de la personne à contacter"),
+		    '#default_value' => variable_get('contact_twitter'),
+		    '#description' => t("Adresse professionnelle twitter de la personne à contacter utilisé dans la zone de médias sociaux")
+		);
+
+		$form['media_fieldset'][0]['contact_google'] = array(
+			'#type' => "textfield",
+		    '#title' => t("Adresse professionnelle google+ de la personne à contacter"),
+		    '#default_value' => variable_get('contact_google'),
+		    '#description' => t("Adresse professionnelle google+ de la personne à contacter utilisé dans la zone de médias sociaux")
+		);
+
+		$form['media_fieldset'][0]['contact_skype'] = array(
+			'#type' => "textfield",
+		    '#title' => t("Adresse professionnelle skype de la personne à contacter"),
+		    '#default_value' => variable_get('contact_skype'),
+		    '#description' => t("Adresse professionnelle skype de la personne à contacter utilisé dans la zone de médias sociaux")
+		);
+
+
+	$form['submit'] = array(
+		'#type' => 'submit',
+		'#value' => t('Save settings'),
+	);
+
+	return $form;
+}
+
+// Envoit du formulaire et validation
+function fredev_contact_form_submit($form, &$form_state)
+{
+	variable_set("contact_nom", $form_state['values']['contact_nom']);
+	variable_set("contact_adresse", $form_state['values']['contact_adresse']);
+	variable_set("contact_code_postal", $form_state['values']['contact_code_postal']);
+
+	variable_set("contact_courriel", $form_state['values']['contact_courriel']);
+
+	variable_set("contact_maison", $form_state['values']['contact_maison']);
+	variable_set("contact_travail", $form_state['values']['contact_travail']);
+	variable_set("contact_cell", $form_state['values']['contact_cell']);
+
+	variable_set("contact_facebook", $form_state['values']['contact_facebook']);
+	variable_set("contact_twitter", $form_state['values']['contact_twitter']);
+	variable_set("contact_google", $form_state['values']['contact_google']);
+	variable_set("contact_skype", $form_state['values']['contact_skype']);
+
+	drupal_set_message(t("Les modifications ont bel et bien étés enregistrées"));
+}

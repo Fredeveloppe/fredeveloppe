@@ -1,0 +1,1031 @@
+// Global Foundation Settings
+@import "compass/css3";
+@import "settings";
+
+// Comment out this import if you don't want to use normalize
+@import "normalize";
+
+// Comment out this import if you are customizing you imports below
+@import "foundation";
+
+/********* Sélecteur de base *************/
+
+body {font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;}
+
+/*********** Classe de base **************/
+
+.middle-content {
+	position: relative;
+	width: 90%;
+	margin: 0 auto;
+}
+
+.center {text-align: center;}
+
+.clear {clear: both;}
+
+.effacer {
+	border: none;
+	border-top: 1px solid #d95353;
+	width: 74px;
+	height: 25px;
+	margin: 0 25px;
+	@include radius(3px);
+	@include text-shadow(1px 1px 1px rgba(0,0,0,.9));
+	font-size: 14px;
+	font-family: Tahoma, Geneva, sans-serif;
+	text-decoration: none;
+}
+
+.relative {position: relative;}
+
+.erreur {
+	text-align: left;
+	color: red;
+	font-size: 15px;
+}
+
+.bandeau {
+	width: 100%;
+	height: 49px;
+	background: url(../images/ruban.png) repeat-x;
+	text-align: center;
+	line-height: 49px;
+	font-size: 24px;
+	@include text-shadow(1px 1px #444, -1px -1px #7f7f7f);
+	letter-spacing: 2px;
+}
+
+.tag .title-box {
+	text-align: center;
+	padding-bottom: 30px;
+}
+
+.tag:before {
+	position: absolute;
+	content: ' ';
+	display: block;
+	width: 100%;
+	height: 2px;
+	left: 0;
+	top: 30px;
+}
+
+.tag h3 { 
+	position: relative;
+	display: inline-block;
+	padding: 18px 35px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-size: 18px;
+	z-index: 2;
+	-webkit-transform: skew(-30deg, 0deg);
+	-ms-transform: skew(-30deg, 0deg);
+	-o-transform: skew(-30deg, 0deg);
+	transform: skew(-30deg, 0deg);
+}
+
+.tag h3 span {
+	display: block;
+	-webkit-transform: skew(30deg, 0deg);
+	-ms-transform: skew(30deg, 0deg);
+	-o-transform: skew(30deg, 0deg);
+	transform: skew(30deg, 0deg);
+}
+
+.sheet .tag .title-box {padding-bottom: 10px;}
+.sheet .tag:before {top: 25px;}
+
+.sheet .tag h3 {
+	font-size: 14px;
+	padding: 14px 20px;
+}
+
+.separateur {
+	width: 100%;
+	height: 2px;
+	background: url(../images/separateur.png) repeat-x;
+}
+
+.footer-col-inner {width: 90%;}
+
+.footer-col-inner h3 {font-size: 20px;}
+.footer-col-inner h3, .footer-col-inner p, .footer-col-inner div {@include text-shadow(1px 1px 1px #000);}
+.footer-col-inner p {font-style: italic;}
+
+
+/*************** Entête ******************/
+
+#connexion {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 290px;
+	height: 251px;
+	background: url(../images/entete/dessous-ecusson.png) no-repeat;
+}
+
+#user-login-form {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 190px;
+}
+
+#connexion .form-item {position: relative;}
+
+#connexion .form-item label {
+	position: absolute;
+	left: 25px;
+	width: 120px;
+	text-align: right;
+	font-size: 12px;
+	padding: 10px;
+}
+
+#connexion .form-item:nth-child(1) label {
+	background: url(../images/entete/utilisateur.png) no-repeat 5px 3px;
+}
+
+#connexion .form-item:nth-child(2) label {
+	background: url(../images/entete/mot-de-passe.png) no-repeat 5px 5px;
+}
+
+#connexion .form-item .form-required {display: none;}
+
+#connexion .form-item input {
+	width: 85%;
+	margin: 0 auto;
+	padding-left: 40%;
+	font-size: 12px;
+	padding-bottom: 0;
+}
+
+#connexion .item-list {font-size: 12px;}
+#connexion .item-list ul {
+	width: 90%;
+	margin: 0 auto;
+}
+
+#connexion .item-list li {
+	margin: 0;
+	padding: 0 10px;
+}
+#connexion .item-list li:first-child {float: left;}
+#connexion .item-list li:last-child {float: right;}
+
+#connexion .item-list a {text-decoration: underline;}
+#connexion .item-list a:hover {text-decoration: none;}
+
+#connexion .form-actions {text-align: center;}
+
+#connexion .form-submit {
+  width: 127px;
+  height: 26px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent url(../images/entete/connexion-initial.png) no-repeat center top;
+  text-indent: -1000em;
+  cursor: pointer;
+}
+
+#connexion .form-submit:hover {background: transparent url(../images/entete/connexion-hover.png) no-repeat center top;}
+#connexion .form-submit:active {background: transparent url(../images/entete/connexion-active.png) no-repeat center top;}
+
+#ecusson-front {
+	position: absolute;
+	top: -15px;
+	left: -105px;
+	background: url(../images/entete/dessus-ecusson.png) no-repeat;
+	width: 500px;
+	height: 450px;
+	z-index: 1;
+}
+
+#vis {
+	position: absolute;
+	top: 210px;
+	left: 235px;
+	background: url(../images/entete/vis.png) no-repeat;
+	width: 30px;
+	height: 30px;
+}
+
+#ecusson-front, #vis {
+	@include perspective(1000);
+	@include backface-visibility(hidden);
+	@include translateZ(0, 1000);
+	@include translate3d(0,0,0);
+}
+
+.region-menu {float: right;}
+
+.region-menu .menu {
+	position: relative;
+	top: 10px;
+	padding: 10px 0 5px;
+}
+
+.region-menu .menu li {
+	position: relative;
+	display: inline-block;
+	list-style-type: none;
+	list-style-image: none;
+	margin: 0 20px;
+}
+
+.region-menu .menu .ribbon {
+	position: relative;
+	top: -10px;
+	display: block;
+	width: 100%;
+	height: 63px;
+	background: url(../images/entete/inner-bg.png) repeat-x;
+	margin-bottom: -63px;
+	z-index: 4;
+}
+
+.region-menu .menu .ribbon span {
+	position: absolute;
+	width: 19px;
+	height: 65px;
+	top: 0;
+}
+
+.region-menu .menu .ribbon .left {
+	left: -19px;
+	background: url(../images/entete/border-left.png) no-repeat;
+}
+
+.region-menu .menu .ribbon .right {
+	right: -19px;
+	background: url(../images/entete/border-right.png) no-repeat;
+}
+
+.region-menu .menu a {
+	position: relative;
+	display: block;
+	padding: 0 10px 7px;
+	z-index: 5;
+}
+
+.region-menu .menu a:hover {padding-bottom: 5px;}
+.region-menu .menu .active:hover {
+	padding-bottom: 7px;
+	border: none;
+}
+
+#fil-ariane {
+	position: absolute;
+	bottom: -83px;
+	left: 325px;
+	height: 72px;
+	background: url(../images/entete/fil-ariane-corps.png) no-repeat;
+	z-index: 2;
+	background-size: 100% 72px;
+	text-align: center;
+	min-width: 240px;
+}
+
+#fil-ariane h3 {
+	font-size: 16px;
+	font-weight: bold;
+	padding: 5px 0 10px;
+}
+
+#fil-ariane a {text-decoration: underline;}
+#fil-ariane a:hover {text-decoration: none;}
+
+#breadcrum-rel {position: relative;}
+
+.breadcrumb {
+	position: absolute;
+	padding: 0;
+}
+
+.crumbs-aside {
+	top: -3px;
+	width: 14px;
+	height: 72px;
+}
+
+.crumbs-top {
+	top: -15px;
+	width: 16px;
+	height: 29px;
+	background: url(../images/entete/fil-ariane-head.png) no-repeat;
+}
+
+#breadcrumb-left {
+	left: -14px;
+	background: url(../images/entete/fil-ariane-gauche.png) no-repeat;
+}
+
+#breadcrumb-right {
+	right: -14px;
+	background: url(../images/entete/fil-ariane-droit.png) no-repeat;
+}
+
+#breadcrumb-top1 {left: 5px;}
+#breadcrumb-top2 {right: 5px;}
+
+#contenu {padding-top: 200px;}
+#main-content {padding-bottom: 30px;}
+
+
+/*************** Footer ******************/
+
+#pied {padding-top: 30px;}
+
+#pied-page {padding: 40px 0;}
+
+#pied-page-final span {line-height: 38px;}
+#pied-page-final span span {font-size: 12px;}
+
+#pied-page-final .menu {
+	position: absolute;
+	right: 0;
+	top: 0;
+	line-height: 30px;
+	margin-bottom: 0;
+}
+
+#pied-page-final .menu li {
+	float: left;
+	list-style-type: none;
+}
+
+#pied-page-final .menu a {padding: 0 5px;}
+
+#pied-page-final .menu .leaf {list-style-image: none;}
+
+.small-img a {outline: none;}
+
+
+/*** Spécial rule pour les écrans hd **/
+@media #{$more-then-hd} {
+	/********** Module de réalisation *********/
+	#realisations-wrapper {width: 1700px;}
+	#realisations-wrapper .box {width: 340px;}
+}
+
+/*** Spécial rule pour les écrans hd **/
+
+@media #{$hd} {
+
+	/********** Module de contact *********/
+
+	#contact-wrapper {
+		width: 1300px;
+		height: 703px;
+	}
+
+	.page-trick {margin-top: 16px;}
+
+	.page, .page2 {height: 665px;}
+
+	.contact-box .box-left {padding-left: 5%;}
+	.contact-medias {margin-top: 40px;}
+	#contact-media-icon {margin-top: 20px;}
+
+	.textarea-input textarea {height: 270px;}
+
+	#bloc-remerciement, #bloc-message {
+		font-size: 20px;
+		line-height: 25px;
+		max-height: 550px;
+		min-height: 550px;
+	}
+
+	/********** Pied de page *********/
+
+	.footer-col1 article, .footer-col2 article {height: 230px;}
+
+	.twitter-box {height: 460px;}
+	.twitter-buble {padding-top: 38px;}
+	.twitter-box .tweet {top: 45px;}
+
+	.col3-end-block {height: 230px;}
+	.col3-end-block .small-img img {
+		width: 68px;
+		height: 68px;
+	}
+	#google-plus, #facebook-like {margin-top: 30px;}
+
+	/********** Module d'accueil *********/
+
+	.letterbox-inner {font-size: 23px;}
+	.letter-timbre {
+		width: 125px;
+		top: 25px;
+	}
+
+	.sheet {
+		width: 23%;
+		margin-left: 1%;
+		margin-right: 1%;
+	}
+
+	/********** Module de réalisation *********/
+	#realisations-wrapper {width: 1400px;}
+	#realisations-wrapper .box {width: 280px;}
+
+}
+
+/*** Spécial rule pour les écrans xlarge **/
+
+@media #{$xlarge} {
+
+	/********** Module de contact *********/
+
+	#contact-wrapper {
+		width: 1030px;
+		height: 557px;
+	}
+
+	.page-trick {margin-top: 13px;}
+
+	.page, .page2 {height: 525px;}
+
+	.contact-box {margin-top: 15px;}
+	.contact-box .box-left span {font-size: 14px;}
+	.contact-box .box-left {width: 45%;}
+
+	.contact-box .box-right {
+		width: 52%;
+		font-size: 12px;
+		line-height: 20px;
+	}
+	.contact-medias {margin-top: 25px;}
+	#contact-media-icon {margin-top: 10px;}
+
+	.form-container {margin-top: 10px;}
+	.textarea-input textarea {height: 175px;}
+
+	#bloc-remerciement, #bloc-message {
+		font-size: 16px;
+		line-height: 20px;
+		max-height: 415px;
+		min-height: 415px;
+	}
+
+	/********** Pied de page *********/
+
+	.footer-col1 article, .footer-col2 article {height: 260px;}
+	.footer-col2 .photo {width: 100px; height: 100px;}
+	.footer-col2 .text {margin-left: 110px;}
+	.footer-col2 h3 {font-size: 18px;}
+	.footer-col2 p {font-size: 14px;}
+	.footer-col2 .writed {
+		position: static;
+		margin-left: 110px;
+	}
+
+	.twitter-box {height: 520px;}
+	.twitter-buble {
+		padding-top: 10%;
+		width: 290px;
+	}
+	.twitter-bird {
+		top: -110px;
+		width: 290px;
+	}
+
+	.twitter-box .no-tweet {
+		font-size: 25px;
+		line-height: 50px;
+	}
+
+	.twitter-box .tweet {
+		margin-left: -145px;
+		width: 290px;
+	}
+
+	.twitter-box .tweet-mess {
+		padding: 15px 20px 10px;
+		font-size: 11px;
+	}
+
+	.tweet-intro span, .twitter-box .tweet-content {font-size: 10px;}
+
+	.tweet-profile {
+		width: 60px;
+		height: 60px;
+	}
+
+	.twitter-box .tweet-intro, .twitter-box .tweet-content {margin: 0 0 10px 70px;}
+
+	.col3-end-block {height: 260px;}
+	.col3-end-block .small-img img {
+		width: 60px;
+		height: 60px;
+	}
+	.breaker {display: block;}
+	#google-plus, #facebook-like {margin-top: 15px;}
+
+	/********** Module de réalisation *********/
+	#realisations-wrapper {width: 1100px;}
+	#realisations-wrapper .box {width: 275px;}
+
+	.sheet {
+		width: 40%;
+		margin-left: 5%;
+		margin-right: 5%;
+	}
+
+	.dual {
+		overflow: hidden;
+		margin-bottom: 50px;
+	}
+
+}
+
+
+/*** Spécial rule pour les écrans large **/
+
+@media #{$large} {
+
+	/********** Module de contact *********/
+
+	#contact-wrapper {
+		width: 100%; 
+		height: auto;
+	}
+
+	.bb-bookblock {
+		width: 100%;
+		height: auto;
+	}
+
+	.bb-item {position: static;}
+
+	.page-trick {background: none;}
+
+	.page, .page2 {
+		width: 98%;
+		margin: 0 auto;
+		display: block;
+		height: auto;
+		left: 0;
+		padding: 0 2%;
+	}
+
+	.contact-box {margin-top: 40px;}
+	.contact-box .box-left span {font-size: 24px;}
+
+	.contact-box .box-left {
+		width: 50%;
+		padding-left: 15%;
+	}
+
+	.contact-box .box-right {
+		width: 47%;
+		font-size: 18px;
+		line-height: 28px;
+	}
+
+	.contact-medias {margin-top: 75px;}
+	#contact-media-icon {margin-top: 30px;}
+
+	.contact-message, .contact-votre-message {margin-top: 75px;}
+	.form-container {margin-top: 50px;}
+
+	#bloc-remerciement, #bloc-message {
+		max-height: none;
+		min-height: none;
+		overflow: hidden;
+	}
+
+	/********** Pied de page *********/
+
+	.footer-col1, .footer-col2 {padding-bottom: 50px;}
+
+	.footer-col1, .footer-col2 {width: 50%;}
+	.footer-col1 article, .footer-col2 article {height: 225px;}
+	.footer-col2 .photo {width: 125px; height: 125px;}
+	.footer-col2 .text {margin-left: 135px;}
+	.footer-col2 h3 {font-size: 18px;}
+	.footer-col2 p {font-size: 14px;}
+	.footer-col2 .writed {
+		position: absolute;
+		margin-left: 0;
+	}
+
+	.twitter-box {height: auto;}
+	.twitter-buble {
+		padding-top: 10%;
+		width: 358px;
+	}
+	.twitter-bird {
+		margin-top: -100px;
+		top: -10px;
+		width: 358px;
+	}
+
+	.twitter-box .tweet {
+		margin-left: -168px;
+		width: 337px;
+	}
+
+	.twitter-box .no-tweet {
+		font-size: 25px;
+		line-height: 70px;
+	}
+
+	.sp-separator {display: none;}
+
+	.twitter-box .tweet-mess {
+		padding: 30px 20px 10px;
+		font-size: 14px;
+	}
+
+	.tweet-profile {
+		width: 75px;
+		height: 75px;
+	}
+
+	.twitter-box .tweet-intro, .twitter-box .tweet-content {margin: 0 0 15px 85px;}
+	.tweet-intro span, .twitter-box .tweet-content {font-size: 12px;}
+
+	.footer-col3 {width: 100%;}
+	.footer-col3 .footer-col-inner, .col3-end-block  {
+		width: 45%;
+		float: left;
+		margin-right: 5%;
+		height: 500px;
+	}
+
+	.col3-part2-entete {display: block;}
+	.col3-end-block .small-img img {
+		width: 100px;
+		height: 100px;
+		margin: 0 25px;
+	}
+	.breaker {margin-bottom: 50px;}
+	#google-plus, #facebook-like {margin-top: 35px;}
+
+	#haut-page a {
+		height: 125px;
+		background-size: 100%;
+	}
+
+	/********** Module d'accueil *********/
+	.letter-timbre {top: 45px;}
+
+	.sheet {
+		width: 45%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+	}
+
+	/********** Module de réalisation *********/
+	#realisations-cats ul {display: none;}
+	#realisations-cats select {display: block;}
+
+	#realisations-wrapper {width: 900px;}
+	#realisations-wrapper .box {width: 300px;}
+}
+
+/*** Spécial rule pour les écrans medium **/
+
+@media #{$medium} {
+
+	.middle-content {width: 100%;}
+
+	#connexion {
+		position: relative;
+		background-image: none;
+		width: 100%;
+		height: auto;
+	}
+
+	#user-login-form {
+		padding-top: 20px;
+		position: relative;
+		height: auto;
+	}
+
+	#ecusson-front {
+		position: relative;
+		width: 87%;
+		margin: 0 auto;
+		top: 0;
+		left: 0;
+		height: 120px;
+		background: url(../images/entete/fredev.png) bottom center no-repeat;
+		-webkit-transform: rotate(0) !important;
+		-moz-transform: rotate(0) !important;
+		-ms-transform: rotate(0) !important;
+		-o-transform: rotate(0) !important;
+		transform: rotate(0) !important;
+	}
+
+	#vis {display: none;}
+
+	#connexion .form-item {margin: 0; padding: 0.5em 0;}
+	#connexion .form-item label {left: 8%;}
+
+	#connexion .item-list li {padding: 0 2.75%;}
+
+	#connexion .form-item input {padding-left: 125px;}
+
+	.region-menu {
+		float: none;
+		padding-bottom: 1px;
+	}
+
+	.region-menu .menu .ribbon {top: -9px;}
+
+	.region-menu .menu {text-align: center;}
+
+	#fil-ariane {
+		position: relative;
+		top: 10px;
+		left: 0;
+		display: inline-block;
+		margin: 0 auto;
+	}
+
+	#contenu {padding-top: 50px;}
+
+	/********** Module de contact *********/
+
+	.contact-box .box-left span {font-size: 20px;}
+
+	.contact-box .box-left {
+		width: 45%;
+		padding-left: 7.5%;
+	}
+
+	.contact-box .box-right {
+		width: 53%;
+		font-size: 14px;
+		line-height: 22px;
+	}
+
+	.action-btns {padding-right: 10%;}
+
+	/********** Pied de page *********/
+
+	.footer-col-inner {margin: 0 auto;}
+
+	.footer-col1 article, .footer-col2 article {height: 275px;}
+	.footer-col2 h3 {font-size: 16px;}
+	.footer-col2 p {font-size: 13px;}
+	.footer-col2 .writed {
+		position: absolute;
+		margin-left: 0;
+	}
+
+	#pied-page-final {
+		width: 95%; 
+		margin: 0 auto;
+	}
+
+	#pied-page-final span span {display: none;}
+
+	.twitter-box {height: auto;}
+	.twitter-buble {
+		padding-top: 10%;
+		width: 262px;
+	}
+	.twitter-bird {
+		margin-top: -80px;
+		top: -10px;
+		width: 262px;
+	}
+
+	.twitter-box .no-tweet {
+		font-size: 22px;
+		line-height: 40px;
+	}
+	.twitter-box .no-tweet span {font-size: 25px;}
+
+	.twitter-box .tweet {
+		margin-left: -145px;
+		width: 290px;
+	}
+
+	.twitter-box .tweet-mess {
+		padding: 15px 20px 10px;
+		font-size: 11px;
+	}
+
+	.tweet-intro span, .twitter-box .tweet-content {font-size: 10px;}
+
+	.tweet-profile {
+		width: 60px;
+		height: 60px;
+	}
+
+	.twitter-box .tweet-intro, .twitter-box .tweet-content {margin: 0 0 10px 70px;}
+
+	.footer-col3 .footer-col-inner, .col3-end-block  {
+		height: 400px;
+		margin: 0 2.5%;
+	}
+
+	.col3-part2-entete {display: block;}
+	.col3-end-block .small-img img {
+		width: 60px;
+		height: 60px;
+		margin: 0 10px;
+	}
+	.breaker {margin-bottom: 25px;}
+	#google-plus, #facebook-like {margin-top: 35px;}
+
+	/********** Module d'accueil *********/
+
+	.letterbox-inner h2 {padding-right: 0;}
+	.letterbox-inner {font-size: 18px;}
+	.letter-timbre {display: none;}
+	.letter-outro img {height: 30px;}
+
+
+	/********** Module de réalisation *********/
+	#realisations-wrapper {width: 600px;}
+	#realisations-wrapper .box {width: 300px;}
+}
+
+
+/*** Spécial rule pour les écrans small **/
+
+@media #{$small} {
+
+	.bandeau {font-size: 18px;}
+
+	.region-menu .menu .ribbon {top: 0;}
+	.region-menu .menu .ribbon span {display: none;}
+
+	.region-menu li.leaf {padding: 0;}
+
+	.region-menu .menu {
+		text-align: left;
+		padding: 0;
+		margin: 0;
+	}
+
+	.region-menu .menu li {
+		display: block;
+		margin: 0;
+		height: 58px;
+	}
+
+	.region-menu .menu li:hover {padding-bottom: 0;}
+
+	.region-menu .menu li a {
+		display: block;
+		padding: 20px 5%;
+		background: url(../images/entete/arrow.png) no-repeat 95% 20px;
+	}
+	.region-menu .menu a:hover {
+		border: none;
+		background: url(../images/entete/arrow_hover.png) no-repeat 95% 20px;
+	}
+
+	.region-menu .menu .active, .region-menu .menu .active:hover {background: none;}
+
+	.breadcrumb, #fil-ariane h3 {display: none;}
+
+	#fil-ariane {
+		top: 0;
+		display: block;
+		background-image: none;
+		width: 100%;
+		margin-top: 8px;
+		height: auto;
+	}
+
+	.breadcrum-text {
+		text-align: left;
+		padding: 10px 5%;
+		font-size: 12px;
+	}
+
+	#contenu {padding-top: 0;}
+
+	/********** Module de contact *********/
+
+	.contact-title {
+		max-width: 333px;
+		width: 100%;
+	}
+
+	.contact-box .box-left, .contact-box .box-right {
+		display: block;
+		width: 98%;
+		text-align: center;
+	}
+
+	.contact-box .box-left {margin-left: -30px;}
+	.contact-box .box-right {margin-top: 10px;}
+
+	.page-top, .page-bottom {height: 100px;}
+
+	.form-container {margin-top: 20px;}
+
+	.dual-input {
+		width: 100%;
+		float: none;
+	}
+
+	/********** Pied de page *********/
+
+	.footer-col1, .footer-col2, .footer-col3 {
+		width: 100%;
+		float: none;
+	}
+	.footer-col1 article, .footer-col2 article, .footer-col3 article {
+		padding-bottom: 20px;
+		height: auto;
+	}
+
+	.footer-col2 {padding-top: 50px;}
+	.footer-col2 .photo {width: 100px; height: 100px;}
+	.footer-col2 .text {margin-left: 110px;}
+	.footer-col2 .writed {
+		position: static;
+		display: block;
+		margin-top: 10px;
+	}
+
+	#pied-page-final {
+		padding-top: 10px;
+		text-align: center;
+	}
+
+	#pied-page-final .menu {
+		position: static;
+		overflow: auto;
+		display: inline-block;
+		font-size: 14px;
+	}
+
+	#pied-page-final > span {
+		padding: 5px 20px 10px;
+		border-top: 1px dashed #000;
+	}
+
+	.twitter-box {height: auto;}
+	.twitter-buble {padding-top: 20px;}
+	.twitter-box .tweet{
+		margin-left: -131px;
+		top: 25px;
+		width: 262px;
+	}
+	.twitter-bird {
+		top: -20px;
+		margin-top: -65px;
+	}
+
+	.footer-col3 {
+		width: 100%;
+		margin-top: 50px;
+	}
+
+	.footer-col3 .footer-col-inner, .col3-end-block  {
+		width: 90%;
+		float: none;
+		margin: 0 auto;
+		height: auto;
+	}
+
+	.col3-end-block {padding-bottom: 100px;}
+
+	.col3-part2-entete {margin-top: 50px;}
+	.col3-end-block .small-img img {
+		width: 75px;
+		height: 75px;
+		margin: 0 15px;
+	}
+	.breaker {margin-bottom: 30px;}
+	#google-plus, #facebook-like {margin-top: 25px;}
+
+	/********** Module d'accueil *********/
+
+	.letterbox-outer {padding: 5px;}
+	.letterbox-inner {padding: 20px 20px 10px;}
+	.letterbox-inner h2 {font-size: 22px;}
+	.letterbox-inner {font-size: 18px;}
+	.letter-outro {text-align: center;}
+	.letter-outro img {
+		display: block;
+		margin: 20px auto 0;
+	}
+
+	.sheet {
+		width: 95%;
+		margin: 0 2.5%;
+		padding-bottom: 15px;
+		margin-bottom: 30px;
+	}
+
+	.services {margin-bottom: 40px;}
+
+
+	/********** Module de réalisation *********/
+	#realisations-wrapper {width: 100%; text-align: center;}
+	#realisations-wrapper .box {width: 100%;}
+}

@@ -1,0 +1,146 @@
+.footer-col3 {
+	float: left;
+	width: 33%;
+}
+
+.footer-col3 .titre {
+	text-indent: -99999px;
+	height: 40px;
+	background: url(../img/garder-contact.png) center center no-repeat;
+}
+
+.footer-col3 .titre2 {
+	text-indent: -99999px;
+	height: 40px;
+	background: url(../img/medias-sociaux.png) center center no-repeat;
+}
+
+.footer-col3 .titre2 + .separateur {margin-bottom: 20px;}
+
+.twitter-box {
+	position: relative;
+	height: 400px;
+	text-align: center;
+}
+
+.twitter-buble {
+	padding-top: 2%;
+	width: 337px;
+}
+
+.twitter-bird {
+	position: relative;
+	top: -120px;
+	width: 337px;
+}
+
+.twitter-box .tweet {
+	position: absolute;
+	top: 2%;
+	left: 50%;
+	margin-left: -168px;
+	width: 337px;
+	color: #000;
+	text-shadow: none;
+	font-size: 25px;
+	text-align: left;
+}
+
+.twitter-box .no-tweet {
+	top: 5%;
+	line-height: 60px;
+	text-align: center;
+}
+
+.twitter-box .no-tweet span {
+	display: block;
+	font-size: 30px;
+}
+
+.twitter-box .tweet-mess {
+	padding: 30px 20px 10px;
+	font-size: 14px;
+}
+
+.twitter-box .tweet-mess p {text-shadow: none;}
+
+.tweet-profile {
+	float: left;
+	width: 75px;
+	height: 75px;
+	border-radius: 5px;
+}
+
+.twitter-box .tweet-intro, .twitter-box .tweet-content {
+	font-style: normal;
+	margin: 0 0 15px 85px;
+	padding: 0;
+}
+
+.tweet-intro span, .twitter-box .tweet-content {font-size: 12px;}
+
+.tweet-intro a {
+	font-weight: bold;
+	color: #000;
+}
+
+.tweet-intro a:hover {color: #0965b2;}
+
+.tweet-intro a span {
+	font-weight: normal;
+	color: #666;
+}
+
+.twitter-box .tweet-outro {
+	font-style: normal;
+	text-align: right;
+	color: #666;
+}
+
+.col3-end-block {
+	position: relative;
+	padding-top: 25px;
+	height: 200px;
+	text-align: center;
+	width: 90%;
+}
+
+#haut-page a {
+	position: absolute;
+	bottom: -52px;
+	left: 50%;
+	margin-left: -50px;
+	width: 100px;
+	height: 106px;
+	background: url(../img/haut-page.png) no-repeat;
+	text-indent: -999999px;
+	background-size: 85%;
+}
+
+#haut-page a:hover {background-position: 0 100%;}
+
+#google-plus, #facebook-like {
+	margin-top: 15px;
+	display: inline-block;
+}
+
+.col3-end-block .small-img img {
+	width: 70px;
+	height: 70px;
+	margin: 0 10px;
+	opacity: 0.6;
+}
+
+.col3-end-block .small-img img:hover {opacity: 1;}
+
+.col3-part2-entete {
+	display: none;
+	margin-top: -25px;
+}
+
+.breaker {
+	display: none;
+	margin-bottom: 15px;
+}
+
+#contact-media-icon a {outline: none;}

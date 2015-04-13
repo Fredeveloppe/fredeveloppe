@@ -1,0 +1,58 @@
+<?php
+
+// Création de la base de données
+function fredev_recommandations_schema()
+{
+	$schema['recommandations'] = array(
+		'description' => t("Gère vos différentes recommandations"),
+		'fields' => array(
+			'id' => array(
+				'description' => "L'identifiant de la recommandation",
+				'type' => 'serial',
+				'unsigned' => true,
+				'not null' => true
+			 ),
+			'titre' => array(
+				'description' => "Titre de la recommandation",
+				'type' => 'varchar',
+				'length' => 255,
+				'not null' => true
+			),
+			'texte' => array(
+				'type' => "text",
+			    'title' => t("Contenu de la recommandation"),
+			    'description' => t("Le contenu de la recommandation est un résumé de l'expérience de travail avec vous"),
+			    'not null' => true
+			),
+			'date_publication' => array(
+				'description' => "Date à laquelle cette recommandation à été écrite",
+				'type' => 'datetime',
+				'mysql_type' => 'datetime',
+				"not null" => true
+			),
+			'personne_ressource' => array(
+				'description' => "Nom de la personne qui à écrit la recommandation",
+				'type' => 'varchar',
+				'length' => 255,
+				'not null' => true
+			),
+			'poste' => array(
+				'description' => "Poste de la personne qui à écrit la recommandation",
+				'type' => 'varchar',
+				'length' => 255,
+				'not null' => true
+			),
+			'fid' => array(
+				'description' => "Identifiant de l'image du logo de l'entreprise pour la recommandation",
+				'type' => 'int',
+				'unsigned' => true,
+				'not null' => true
+			 ),
+		),
+		'primary key' => array('id')
+	);
+
+	return $schema;
+}
+
+?>

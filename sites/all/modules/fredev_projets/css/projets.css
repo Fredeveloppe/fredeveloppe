@@ -1,0 +1,16 @@
+.footer-col1 {
+	float: left;
+	width: 33%;
+}
+
+.footer-col1 .titre {
+	text-indent: -99999px;
+	height: 40px;
+	background: url(../img/projets-actuel.png) center center no-repeat;
+}
+
+.footer-col1 article {
+	padding-top: 25px;
+	height: 200px;
+	font-size: 15px;
+}

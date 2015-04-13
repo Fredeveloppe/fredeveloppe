@@ -1,0 +1,102 @@
+<?php
+
+// Règle spéciale lors de l'installation
+function fredev_comments_install()
+{
+  db_query("ALTER TABLE {commentaires} ADD CONSTRAINT {users} FOREIGN KEY (uid) REFERENCES {users} (uid) ON DELETE SET NULL ON UPDATE CASCADE");
+}
+
+
+// Règle spéciale lors de la désinstallation
+function fredev_comment_uninstall()
+{
+  db_query("ALTER TABLE {commentaires} DROP CONSTRAINT IF EXIST {users}");
+}
+
+
+// Système d'aide
+function fredev_comments_help($path, $args) {
+  if ($path == 'admin/help#fredev_projets') {
+    return t("Allez dans la gestion des blocs sous l'onglet structure pour modifier la position du module de contact");
+  }
+}
+
+// Affichage du bloc dans la liste des blocks
+function fredev_comments_block_info()
+{
+	$blocks = array();
+
+	$blocks['fredev_comments'] = array(
+	    'info' => t('Commentaires du site'),
+	    'cache' => DRUPAL_NO_CACHE,
+  	);
+
+	return $blocks;
+}
+
+// Détermination du contenu du block pour l'affichage final
+function fredev_comments_block_view($name)
+{
+	$mod_path = drupal_get_path('module', 'fredev_comments');
+	drupal_add_css($mod_path. '/css/comments.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+	
+	// Évalue le PHP/HTML et stock son résultat dans une variable
+	ob_start();
+	include($mod_path."/template.php");
+	$content = ob_get_clean();
+
+	if ($name == 'fredev_comments') {	 
+	    $block = array(
+	      'subject' => t('Commentaires du site'),
+	      'content' => $content
+	    );
+	 
+	    return $block;
+	}
+
+}
+
+// Ajout de la configuration dans un panneau
+function fredev_comments_menu() {
+  $items = array();
+
+  $items['admin/config/fredeveloppe'] = array(
+    'title' => 'Fredeveloppe Website',
+    'description' => 'Configuration des modules spécifiques à Fredeveloppe',
+    'position' => 'right',
+    'weight' => -100,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+
+  $items['admin/config/fredeveloppe/comments'] = array(
+    'title' => 'Commentaires du site',
+    'description' => "Configurer l'affichage du module listant les commentaires du site",
+    'page callback' => 'comments_admin',
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'inc/comments.admin.inc',
+  );
+
+  $items['admin/config/fredeveloppe/comments/formulaire'] = array(
+    'title' => 'Édition de commentaire',
+    'description' => "Formulaire d'édition de commentaire",
+    'page callback' => 'comments_formulaire',
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'inc/comments.admin.inc',
+  );
+
+  $items['admin/config/fredeveloppe/comments/suppression'] = array(
+    'title' => "Suppression d'un commentaire",
+    'description' => "Suppression d'un commentaire",
+    'page callback' => 'comments_suppression',
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'inc/comments.admin.inc',
+  );
+
+  return $items;
+}

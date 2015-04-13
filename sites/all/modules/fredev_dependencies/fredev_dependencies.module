@@ -1,0 +1,10 @@
+<?php
+
+// Système d'aide
+function fredev_dependencies_help($path, $args) {
+  if ($path == 'admin/help#fredev_dependencies') {
+    return t("Ce module sert uniquement de point de relais pour une bonne dose de fonctions. Le désintaller provoquera de nombreux disfonctionnement");
+  }
+}
+
+?>

@@ -1,0 +1,101 @@
+<?php
+
+// Règle spéciale lors de l'installation
+function fredev_recommandations_install()
+{
+  db_query("ALTER TABLE {recommandations} ADD CONSTRAINT {recommandations_img} FOREIGN KEY (fid) REFERENCES {file_managed} (fid) ON DELETE CASCADE ON UPDATE CASCADE");
+}
+
+
+// Règle spéciale lors de la désinstallation
+function fredev_recommandations_uninstall()
+{
+  db_query("ALTER TABLE {recommandations} DROP CONSTRAINT IF EXIST {recommandations_img}");
+}
+
+// Système d'aide
+function fredev_recommandations_help($path, $args) {
+  if ($path == 'admin/help#fredev_recommandations') {
+    return t("Allez dans la gestion des blocs sous l'onglet structure pour modifier la position du module de recommandations");
+  }
+}
+
+// Affichage du bloc dans la liste des blocks
+function fredev_recommandations_block_info()
+{
+	$blocks = array();
+
+	$blocks['recommandations'] = array(
+	    'info' => t('Vos recommandations'),
+	    'cache' => DRUPAL_NO_CACHE,
+  	);
+
+	return $blocks;
+}
+
+// Détermination du contenu du block pour l'affichage final
+function fredev_recommandations_block_view($name)
+{
+	$mod_path = drupal_get_path('module', 'fredev_recommandations');
+	drupal_add_css($mod_path. '/css/recommandations.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+
+	// Évalue le PHP/HTML et stock son résultat dans une variable
+	ob_start();
+	include($mod_path."/template.php");
+	$content = ob_get_clean();
+
+	if ($name == 'recommandations') {	 
+	    $block = array(
+	      'subject' => t('Vos recommandations'),
+	      'content' => $content
+	    );
+	 
+	    return $block;
+	}
+
+}
+
+// Ajout de la configuration dans un panneau
+function fredev_recommandations_menu() {
+  $items = array();
+
+  $items['admin/config/fredeveloppe'] = array(
+    'title' => 'Fredeveloppe Website',
+    'description' => 'Configuration des modules spécifiques à Fredeveloppe',
+    'position' => 'right',
+    'weight' => -100,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+
+  $items['admin/config/fredeveloppe/recommandations'] = array(
+    'title' => 'Vos recommandations',
+    'description' => "Configurer l'affichage du module listant les recommandations",
+    'page callback' => 'recommandations_admin',
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'inc/recommandations.admin.inc',
+  );
+
+  $items['admin/config/fredeveloppe/recommandations/formulaire'] = array(
+    'title' => 'Édition de recommandation',
+    'description' => "Formulaire d'édition de recommendation",
+    'page callback' => 'recommandations_formulaire',
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'inc/recommandations.admin.inc',
+  );
+
+  $items['admin/config/fredeveloppe/recommandations/suppression'] = array(
+    'title' => "Suppression d'une recommandation",
+    'description' => "Suppression d'une recommandation qui n'a pu lieu d'être",
+    'page callback' => 'recommandations_suppression',
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'inc/recommandations.admin.inc',
+  );
+
+  return $items;
+}
